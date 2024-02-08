@@ -5,9 +5,61 @@ import org.example.a2023_11_cdan_server.model.StudentRepository
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+
 
 @Controller
 class MyController {
+
+    /* -------------------------------- */
+    // Formulaire
+    /* -------------------------------- */
+    //http://localhost:8080/form
+    @GetMapping("/form")
+    fun form(studentBean: StudentBean): String {
+
+        println("/form")
+        studentBean.note = 5
+        //Spring créera une instance de StudentBean qu'il mettra dans le model
+        return "studentForm"
+    }
+
+    @PostMapping("/formSubmit")
+    fun formResponse(studentBean: StudentBean, redirect: RedirectAttributes): String {
+        println("/formSubmit :  : $studentBean")
+
+        try  {
+            if (studentBean.name.isBlank()) {
+                throw Exception("Nom manquant")
+            }
+            else if (studentBean.note < 0) {
+                throw Exception("Note positive attendu")
+            }
+
+            redirect.addFlashAttribute("studentBean", studentBean)
+            //Cas qui marche
+            return "redirect:formResult" // Redirection sur /formResult
+        } catch (e:Exception) {
+            //Affiche le détail de l'erreur dans la console serveur
+            e.printStackTrace()
+
+
+            redirect.addFlashAttribute("errorMessage", "Erreur : ${e.message}")
+            //redirect.addAttribute("studentBean", studentBean)
+            //Cas d'erreur
+            return "redirect:form" //Redirige sur /form
+        }
+    }
+
+    @GetMapping("/formResult") //Affiche la page résultat
+    fun formResult(): String {
+        return "studentFormResult" //Lance studentForm.html
+    }
+
+    /* -------------------------------- */
+    // Autre exo
+    /* -------------------------------- */
 
     //http://localhost:8080/filter?name=toto&note=12
     @GetMapping("/filter")
