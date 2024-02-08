@@ -20,7 +20,6 @@ class MyController {
     fun form(studentBean: StudentBean): String {
 
         println("/form")
-        studentBean.note = 5
         //Spring créera une instance de StudentBean qu'il mettra dans le model
         return "studentForm"
     }
@@ -44,9 +43,10 @@ class MyController {
             //Affiche le détail de l'erreur dans la console serveur
             e.printStackTrace()
 
-
+            //pour garder les données entrées dans le formulaire par l'utilisateur
+            redirect.addFlashAttribute("studentBean", studentBean)
+            //Pour transmettre le message d'erreur
             redirect.addFlashAttribute("errorMessage", "Erreur : ${e.message}")
-            //redirect.addAttribute("studentBean", studentBean)
             //Cas d'erreur
             return "redirect:form" //Redirige sur /form
         }
