@@ -1,6 +1,7 @@
 package org.example.a2023_11_cdan_server.restcontroller
 
 import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpSession
 import org.example.a2023_11_cdan_server.StudentBean
 import org.springframework.http.HttpRequest
 import org.springframework.web.bind.annotation.*
@@ -12,11 +13,11 @@ class MyRestController {
 
     //http://localhost:8080/test
     @GetMapping("/test", )
-    fun test(): String {
-        println("/test")
+    fun test(session: HttpSession): String {
+        println("/test sessionId=${session.id}" )
 
 
-        return "HelloWorld "
+        return "HelloWorld sessionId=${session.id}"
     }
 
     /* -------------------------------- */
