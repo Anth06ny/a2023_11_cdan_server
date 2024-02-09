@@ -1,6 +1,6 @@
 package org.example.a2023_11_cdan_server.restcontroller
 
-import org.example.a2023_11_cdan_server.PlaneBean
+import org.example.a2023_11_cdan_server.model.PlaneBean
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -32,7 +32,7 @@ class AirportAPI {
     //http://localhost:8080/airport/park?position=2
     //{ "name":"toto", "id":"12" }
     @PostMapping("/park")
-    fun park(@RequestBody plane:PlaneBean, position:Int?): Int {
+    fun park(@RequestBody plane: PlaneBean, position:Int?): Int {
 
         println("/park position=$position plane=$plane" )
 

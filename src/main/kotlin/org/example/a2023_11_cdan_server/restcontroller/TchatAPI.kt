@@ -1,6 +1,6 @@
 package org.example.a2023_11_cdan_server.restcontroller
 
-import org.example.a2023_11_cdan_server.MessageBean
+import org.example.a2023_11_cdan_server.model.MessageBean
 import org.springframework.web.bind.annotation.*
 
 @RestController

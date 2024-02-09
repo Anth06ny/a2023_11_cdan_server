@@ -1,6 +1,6 @@
 package org.example.a2023_11_cdan_server.controller
 
-import org.example.a2023_11_cdan_server.StudentBean
+import org.example.a2023_11_cdan_server.model.StudentBean
 import org.example.a2023_11_cdan_server.model.StudentRepository
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model

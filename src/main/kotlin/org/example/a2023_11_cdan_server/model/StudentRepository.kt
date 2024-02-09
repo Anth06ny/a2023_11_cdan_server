@@ -1,7 +1,5 @@
 package org.example.a2023_11_cdan_server.model
 
-import org.example.a2023_11_cdan_server.StudentBean
-
 //Object permet d'écrire un Singleton instantiable qu'une seule fois
 //Il peut être utiliser pour les classes n'ayant que des éléments dans un companion object
 object StudentRepository {

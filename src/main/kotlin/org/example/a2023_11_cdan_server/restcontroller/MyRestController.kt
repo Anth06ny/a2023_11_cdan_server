@@ -1,11 +1,8 @@
 package org.example.a2023_11_cdan_server.restcontroller
 
-import jakarta.servlet.http.HttpServletResponse
 import jakarta.servlet.http.HttpSession
-import org.example.a2023_11_cdan_server.StudentBean
-import org.springframework.http.HttpRequest
+import org.example.a2023_11_cdan_server.model.StudentBean
 import org.springframework.web.bind.annotation.*
-import java.net.http.HttpResponse
 
 @RestController
 class MyRestController {
