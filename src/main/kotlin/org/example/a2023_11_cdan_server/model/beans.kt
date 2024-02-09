@@ -3,11 +3,7 @@ package org.example.a2023_11_cdan_server.model
 import jakarta.persistence.Entity
 
 
-data class UserBean(
-    var login : String ="",
-    var password : String ="",
-    var sessionId : String =""
-)
+
 
 data class StudentBean(var name:String = "", var note : Int = 0)
 data class MessageBean(var pseudo: String, var message : String)

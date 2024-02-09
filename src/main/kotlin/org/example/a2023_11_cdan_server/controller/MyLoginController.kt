@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
 @Controller
 @RequestMapping("/user")
-class MyLoginController {
+class MyLoginController(val userService: UserService) {
 
     //Affichage du formulaire
     //http://localhost:8080/user/login
@@ -20,7 +20,7 @@ class MyLoginController {
     fun form(userBean: UserBean, session: HttpSession): String {
         println("/login ${session.id}")
 
-        if (UserService.findBySessionId(session.id) != null) {
+        if (userService.findBySessionId(session.id) != null) {
             //déja connecté je redirige
             return "redirect:/user/userregister"
         }
@@ -40,33 +40,8 @@ class MyLoginController {
         println("/loginSubmit :  : $userBean")
 
         try {
-            if (userBean.login.isBlank()) {
-                throw Exception("Nom manquant")
-            }
-            else if (userBean.password.isBlank()) {
-                throw Exception("Password manquant")
-            }
 
-            val userBdd: UserBean? = UserService.findByLogin(userBean.login)
-
-            if (userBdd == null) {
-                //User inexistant je l'ajoute
-                userBean.sessionId = session.id
-                UserService.save(userBean)
-            }
-            else {
-                //Utilisateur existant
-                if (userBean.password == userBdd.password) {
-                    //password ok
-                    //Je sauvegarde son session ID
-                    userBean.sessionId = session.id
-                    UserService.save(userBean)
-                }
-                else {
-                    //password !ok
-                    throw Exception("Mot de passe incorrect")
-                }
-            }
+            userService.insertOrCheck(userBean, session.id)
 
             //Cas qui marche
             return "redirect:/user/userregister" // Redirection sur /formResult
@@ -90,13 +65,14 @@ class MyLoginController {
     fun userRegister(model: Model, session: HttpSession, redirect: RedirectAttributes): String {
 
         try {
-            val user = UserService.findBySessionId(session.id)
+
+            val user = userService.findBySessionId(session.id)
             if (user == null) {
                 throw Exception("Veuillez vous reconnecter")
             }
 
             model.addAttribute("userBean", user)
-            model.addAttribute("userList", UserService.load())
+            model.addAttribute("userList", userService.load())
             return "userregister" //Lance studentForm.html
         }
         catch (e: Exception) {
@@ -110,10 +86,9 @@ class MyLoginController {
 
     @GetMapping("/logout") //Affiche la page résultat
     fun logout(session: HttpSession): String {
-        UserService.findBySessionId(session.id)?.let {
-            it.sessionId = ""
-            UserService.save(it)
-        }
+
+        //Spring regénerera un nouveau sessionId au prochain appel
+        session.invalidate()
 
         return "redirect:/user/login"
     }

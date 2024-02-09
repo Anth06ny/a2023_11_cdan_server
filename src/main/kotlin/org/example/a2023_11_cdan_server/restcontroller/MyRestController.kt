@@ -15,7 +15,6 @@ class MyRestController(val teacherService: TeacherService) {
     fun test(session: HttpSession): String {
         println("/test sessionId=${session.id}" )
 
-
         return "HelloWorld sessionId=${session.id}"
     }
 
