@@ -2,10 +2,12 @@ package org.example.a2023_11_cdan_server.restcontroller
 
 import jakarta.servlet.http.HttpSession
 import org.example.a2023_11_cdan_server.model.StudentBean
+import org.example.a2023_11_cdan_server.model.TeacherBean
+import org.example.a2023_11_cdan_server.model.TeacherService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class MyRestController {
+class MyRestController(val teacherService: TeacherService) {
 
 
     //http://localhost:8080/test
@@ -15,6 +17,21 @@ class MyRestController {
 
 
         return "HelloWorld sessionId=${session.id}"
+    }
+
+
+    /* -------------------------------- */
+    // TestJPA
+    /* -------------------------------- */
+
+    //http://localhost:8080/testTeacher?name=blabla
+    @GetMapping("/testTeacher", )
+    fun testTeacher(id:Long? = null, name:String, code : Int? = null): List<TeacherBean> {
+        println("/testTeacher")
+
+        teacherService.createTeacher(id, name, code)
+
+        return teacherService.getAll()
     }
 
     /* -------------------------------- */

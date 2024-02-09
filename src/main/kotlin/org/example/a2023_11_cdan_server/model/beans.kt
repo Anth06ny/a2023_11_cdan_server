@@ -1,5 +1,7 @@
 package org.example.a2023_11_cdan_server.model
 
+import jakarta.persistence.Entity
+
 
 data class UserBean(
     var login : String ="",

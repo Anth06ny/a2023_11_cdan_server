@@ -118,5 +118,4 @@ class MyLoginController {
         return "redirect:/user/login"
     }
 
-
 }
